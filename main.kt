@@ -4,69 +4,70 @@ import java.time.Duration
 fun main() {
     val search = 9999
     val listSize = 999990
-    binary(search,listSize)
-    sequencial(search,listSize)
+    binarySearch(search, listSize)
+    sequentialSearch(search, listSize)
 }
-fun binary(search: Int, listSize:Int) {
+
+fun binarySearch(search: Int, listSize: Int) {
     val startTime = LocalDateTime.now().toLocalTime()
-    println("Binary!")
-    val search = search
+    println("Binary Search!")
+    val searchValue = search
 
     val list = (1..listSize).toList()
 
-    var inicio = 0
-    var fim = list.size - 1
+    var start = 0
+    var end = list.size - 1
 
-    var encontrado = false
+    var found = false
 
-    while (inicio <= fim) {
-        val meio = (inicio + fim) / 2
-        val elementoMeio = list[meio]
+    while (start <= end) {
+        val mid = (start + end) / 2
+        val midElement = list[mid]
 
         when {
-            search == elementoMeio -> {
-                encontrado = true
+            searchValue == midElement -> {
+                found = true
                 break
             }
-            search < elementoMeio -> fim = meio - 1
-            else -> inicio = meio + 1
+            searchValue < midElement -> end = mid - 1
+            else -> start = mid + 1
         }
     }
 
-    if (encontrado) {
-        println("Valor $search encontrado.")
+    if (found) {
+        println("Value $searchValue found.")
         val timeDifference = Duration.between(startTime, LocalDateTime.now())
         val seconds = timeDifference.toSeconds()
         val millis = timeDifference.toMillis()
-        println("Tempo desde o início: $seconds segundos ${millis % 1000} milissegundos")
+        println("Time elapsed: $seconds seconds ${millis % 1000} milliseconds")
     } else {
-        println("Valor $search não encontrado.")
+        println("Value $searchValue not found.")
     }
 }
 
-fun sequencial(search: Int, listSize:Int){
+fun sequentialSearch(search: Int, listSize: Int) {
     val startTime = LocalDateTime.now()
-    println("Sequencial")
-    val search = search
+    println("Sequential Search")
+    val searchValue = search
 
     val list = (1..listSize).toList()
 
-    var encontrado = false
+    var found = false
 
     for ((_, item) in list.withIndex()) {
-        if (item == search) {
-            encontrado = true
+        if (item == searchValue) {
+            found = true
             break
         }
     }
 
-    if (encontrado) {
-        kotlin.io.println("Valor $search encontrado.")
+    if (found) {
+        println("Value $searchValue found.")
         val duration = Duration.between(startTime, LocalDateTime.now())
         val seconds = duration.toSeconds()
         val millis = duration.toMillis()
-        kotlin.io.println("Tempo desde o início: $seconds segundos (${millis % 1000} milissegundos)")
+        println("Time elapsed: $seconds seconds ${millis % 1000} milliseconds")
     } else {
-        kotlin.io.println("Valor $search não encontrado.")
+        println("Value $searchValue not found.")
     }
 }
